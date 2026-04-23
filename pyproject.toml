@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "protoproxy"
-version = "0.0.3"
+version = "0.0.4"
 description = "Fast, lightweight protocol translation hub."
 readme = "README.md"
 requires-python = ">=3.9"
