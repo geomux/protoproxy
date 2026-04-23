@@ -13,26 +13,30 @@ New protocols are two files: an input module that normalizes into the canonical 
 Currently supports HTTPS and MCP.
 
 ```
-                                     ┌────────────────────────────────────┐
-                                     │             protoproxy             │
-                                     │                                    │
-               ┌──────────┐          │  ┌──────────┐     ┌─────────────┐  │
- Internet ◄──► │  Nginx   │ ◄──────► │  │  https   │     │  Canonical  │  │
-  (HTTPS)      │  :443    │          │  │  input/  │◄───►│    dict     │  │
-               │Rate limit│          │  │  output  │     │             │  │
-               │  Bearer  │          │  └──────────┘     └──────▲─|────┘  │
-               │  token   │          │                          | |       │
-               └──────────┘          │                   ┌──────|-▼─────┐ │
-                                     │                   │     mcp      │ │
-                                     │                   │   input/     │ │
-                                     │                   │   output     │ │
-                                     │                   └──────▲─|─────┘ │
-                                     └──────────────────────────|-|───────┘
-                                                                | |
-                                                         ┌──────|-▼───────┐
-                                                         │   MCP Server   │
-                                                         │    :8026       │
-                                                         └────────────────┘
+                                     +------------------------------------+
+                                     |             protoproxy             |
+                                     |                                    |
+               +----------+          |  +----------+     +-------------+  |
+ Internet <--> |  Nginx   | <------> |  |  https   |     |  Canonical  |  |
+  (HTTPS)      |  :443    |          |  |  input/  |<--->|    dict     |  |
+               |Rate limit|          |  |  output  |     |             |  |
+               |  Bearer  |          |  +----------+     +-------------+  |
+               |  token   |          |                          ^         |
+               +----------+          |                          |         |
+                                     |                          v         |
+                                     |                   +-------------+  |
+                                     |                   |     mcp     |  |
+                                     |                   |   input/    |  |
+                                     |                   |   output    |  |
+                                     |                   +-------------+  |
+                                     |                          |         |
+                                     +--------------------------+---------+
+                                                                |
+                                                                v
+                                                        +---------------+
+                                                        |  MCP Server   |
+                                                        |    :8026      |
+                                                        +---------------+
 ```
 
 protoproxy doesn't replace your reverse proxy — it complements it. Nginx handles TLS termination, rate limiting, and bearer token or API key authentication. Only clean, authorized traffic reaches protoproxy.
