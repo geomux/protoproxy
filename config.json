@@ -1,0 +1,36 @@
+{
+  "inputs": {
+    "https": {
+      "enabled": true,
+      "host": "0.0.0.0",
+      "port": 8080
+    },
+    "mcp": {
+      "enabled": true,
+      "host": "0.0.0.0",
+      "port": 8090
+    },
+    "websocket": {
+      "enabled": true,
+      "host": "0.0.0.0",
+      "port": 8081
+    }
+  },
+  "outputs": {
+    "https": {
+      "enabled": true,
+      "endpoint": "http://localhost:9080"
+    },
+    "mcp": {
+      "enabled": true,
+      "endpoint": "http://localhost:9090"
+    },
+    "websocket": {
+      "enabled": true,
+      "endpoint": "ws://localhost:9081"
+    }
+  },
+  "router": {
+    "default_output": "mcp"
+  }
+}
